@@ -43,7 +43,7 @@ def main() -> int:
     check("local/private hosts are rejected" in source, "URL hardening missing")
     check("criteria must be passive descriptive conditions" in source, "criterion prompt-channel guard missing")
     check(RPC in (ROOT / "gltest.config.yaml").read_text() and RPC in (ROOT / "scripts" / "deploy_studionet.py").read_text(), "stable RPC not pinned")
-    check(CHAIN in (ROOT / "README.md").read_text() and CHAIN in (ROOT / "scripts" / "deploy_studionet.py").read_text(), "chain id not pinned")
+    check(CHAIN in (ROOT / "README.md").read_text(encoding="utf-8") and CHAIN in (ROOT / "scripts" / "deploy_studionet.py").read_text(encoding="utf-8"), "chain id not pinned")
     forbidden = {"package.json", "index.html", "vite.config.ts", "next.config.js"}
     check(not any(p.name in forbidden for p in files()), "frontend artifact present")
     print(f"PASS: Recoil preflight ({count + 11} checks)")
