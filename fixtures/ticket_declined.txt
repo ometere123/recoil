@@ -1,0 +1,2 @@
+Recoil Demo Evidence
+Event ticket request T-300 was declined. No valid event ticket T-300 was issued and no ticket entitlement exists.
