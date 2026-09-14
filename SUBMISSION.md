@@ -28,6 +28,17 @@ Recoil targets **Studionet chain 61999** via `https://studio.genlayer.com/api`.
 
 None. Recoil is intentionally submitted as a standalone Intelligent Contract primitive.
 
-## Live deployment
+## Live proof (Studionet 61999)
 
-Addresses and finalized transaction evidence should be added only after a real deployment and verification. No live proof is claimed until that occurs.
+Canonical Recoil: `0x5825cCD3dcBC713291c291e86c978444e0408a50`.
+Three participant harnesses:
+
+- `0xaD864b8EDb28721dAFACc96419e84aD392B9841B`
+- `0x763eDd04372F7BC5C5F69Fb280C47D5768494007`
+- `0x4ecD6FEc84a567b0E177B963C848Dc23bCb2D3BC`
+
+The deployment and lifecycle transaction records are in `DEPLOYMENT.md`. The all-success Saga reached `COMPLETED` after three finalized participant callbacks. A separate Saga intentionally failed semantic verification on step 3 and reached `COMPENSATED`; finalized compensation callbacks prove reverse order 3 → 2 → 1.
+
+The live callback initially exposed a GenVM v0.1 event ABI limit: `StepVerified` had four indexed fields plus its signature. The final source indexes `saga_id`, `step_id`, and `phase`, and stores `verdict` in the event blob. No lifecycle semantics changed.
+
+Recoil has no frontend. It is a reusable Saga coordinator and reference participant harness, targeting only Studionet chain 61999 at `https://studio.genlayer.com/api`.

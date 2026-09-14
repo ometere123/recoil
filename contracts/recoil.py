@@ -168,7 +168,7 @@ class StepDispatched(gl.Event):
 
 
 class StepVerified(gl.Event):
-    def __init__(self, saga_id: u256, step_id: u256, phase: u8, verdict: u8, /, **blob): ...
+    def __init__(self, saga_id: u256, step_id: u256, phase: u8, /, **blob): ...
 
 
 class SagaTerminal(gl.Event):
@@ -650,7 +650,7 @@ class Recoil(gl.Contract):
         verdict = int(result["verdict"])
         rid = self._receipt(saga_id, step_id, PHASE_EXECUTION, verdict, int(step.execution_evidence_mode), evidence_ref, str(result["reason"]), str(result["evidence"]))
         state.execution_verification_id = rid
-        StepVerified(saga_id, step_id, u8(PHASE_EXECUTION), u8(verdict), verification_id=int(rid)).emit()
+        StepVerified(saga_id, step_id, u8(PHASE_EXECUTION), verdict=u8(verdict), verification_id=int(rid)).emit()
         if verdict == VERDICT_SATISFIED:
             state.status = u8(STEP_CONFIRMED)
             blueprint = self._blueprint(saga.blueprint_id)
@@ -681,7 +681,7 @@ class Recoil(gl.Contract):
         verdict = int(result["verdict"])
         rid = self._receipt(saga_id, step_id, PHASE_COMPENSATION, verdict, int(step.compensation_evidence_mode), evidence_ref, str(result["reason"]), str(result["evidence"]))
         state.compensation_verification_id = rid
-        StepVerified(saga_id, step_id, u8(PHASE_COMPENSATION), u8(verdict), verification_id=int(rid)).emit()
+        StepVerified(saga_id, step_id, u8(PHASE_COMPENSATION), verdict=u8(verdict), verification_id=int(rid)).emit()
         if verdict != VERDICT_SATISFIED:
             state.status, saga.status, saga.updated_at = u8(STEP_COMPENSATION_FAILED), u8(SAGA_STUCK), u256(now_ts())
             return
